@@ -42,10 +42,27 @@ class UserVk:
     def parsed_photo(self, photos_info: list):
         photo_list = ['']
         photo_sizes = 1
-        user = vk.method("users.get", {"user_ids": 1, "fields": ["photo_max_orig"]})
+        url_1 = 'https://api.vk.com/method/photos.get'
+        params = {'access_token': TOKEN_VK,
+                  'v': '5.131',
+                  'album_id': 'profile',
+                  'extending': 1,
+                  'count': 5}
+        req = requests.get('https://api.vk.com/method/photos.get', params)
         imageLink = user[0]['photo_max_orig']
+        height = 0
+        count = 5
+        for i in range(0, len(photo_dict)):
+            for photo in photo_list[i]:
+                    for size in photo['sizes']:
+                        if size['height'] > height:
+                            height = size['height']
+      
+                    data = {'date': photo['date'], 'long': photo['long']}
+                    photo_list.append(data)
 
         return photo_list
+        print (photo_list)
 
 
 class YandexUpload:
