@@ -39,7 +39,8 @@ class UserVk:
             print('Ошибка получения фото')
             return None
 
-    def parsed_photo(self, photos_info: list):
+    
+    def parsed_photo(self, photo_list = list):
         photo_list = ['']
         photo_sizes = 1
         url_1 = 'https://api.vk.com/method/photos.get'
@@ -49,10 +50,9 @@ class UserVk:
                   'extending': 1,
                   'count': 5}
         req = requests.get('https://api.vk.com/method/photos.get', params)
-        imageLink = user[0]['photo_max_orig']
         height = 0
         count = 5
-        for i in range(0, len(photo_dict)):
+        for i in range(0, len(photo_list)):
             for photo in photo_list[i]:
                     for size in photo['sizes']:
                         if size['height'] > height:
@@ -61,8 +61,10 @@ class UserVk:
                     data = {'date': photo['date'], 'long': photo['long']}
                     photo_list.append(data)
 
-        return photo_list
+        
         print (photo_list)
+        return photo_list
+
 
 
 class YandexUpload:
